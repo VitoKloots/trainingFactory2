@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\TrainingRepository;
 use App\Security\LoginFromAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,6 +52,16 @@ class BezoekerController extends AbstractController
 
         return $this->render('register.html.twig', [
             'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/trainingIndex", name="training_index", methods={"GET"})
+     */
+    public function trainingIndexAction(TrainingRepository $trainingRepository): Response
+    {
+        return $this->render('training/index.html.twig', [
+            'trainings' => $trainingRepository->findAll(),
         ]);
     }
 }
